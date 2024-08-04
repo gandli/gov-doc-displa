@@ -2,6 +2,7 @@
 
 import { prisma } from '@/app/lib/prisma'
 import { NextResponse } from 'next/server'
+import { GetStaticPaths, GetStaticProps } from 'next';
 
 export async function GET(
     request: Request,

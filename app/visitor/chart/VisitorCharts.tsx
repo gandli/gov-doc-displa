@@ -13,9 +13,9 @@ import {
     CartesianGrid,
     Tooltip,
     Legend,
+    BarChart,
+    Bar,
 } from "recharts";
-
-
 
 // 定义 PurposePieEntry 类型
 interface PurposePieEntry {
@@ -23,9 +23,17 @@ interface PurposePieEntry {
     value: number;
 }
 
+// 定义 ProcessingEntry 类型
+interface ProcessingEntry {
+    status: string;
+    count: number;
+}
+
 // 定义数据类型
 interface Data {
+    area: { date: string; count: number }[];
     purposePie: PurposePieEntry[];
+    progress: ProcessingEntry[];
 }
 
 // Fetch visitors data from the API
@@ -49,7 +57,9 @@ const generateMonthDates = () => {
 };
 
 const ChartPage = () => {
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<Data | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function loadData() {
@@ -61,14 +71,11 @@ const ChartPage = () => {
                 const monthDates = generateMonthDates();
 
                 // Count daily visits
-                const dailyVisits = visitors.reduce((acc: any, visitor: any) => {
+                const dailyVisits = visitors.reduce<Record<string, number>>((acc, visitor) => {
                     const date = new Date(visitor.visitTime).toLocaleDateString();
-                    if (!acc[date]) {
-                        acc[date] = 0;
-                    }
-                    acc[date] += 1;
+                    acc[date] = (acc[date] || 0) + 1;
                     return acc;
-                }, {} as Record<string, number>);
+                }, {});
 
                 // Format data for the area chart
                 const areaData = monthDates.map(date => ({
@@ -77,10 +84,10 @@ const ChartPage = () => {
                 }));
 
                 // Count purposes
-                const purposeCounts = visitors.reduce((acc: any, visitor: any) => {
+                const purposeCounts = visitors.reduce<Record<string, number>>((acc, visitor) => {
                     acc[visitor.purpose] = (acc[visitor.purpose] || 0) + 1;
                     return acc;
-                }, {} as Record<string, number>);
+                }, {});
 
                 // Format data for the pie chart
                 const purposePie = Object.keys(purposeCounts).map(key => ({
@@ -88,19 +95,36 @@ const ChartPage = () => {
                     value: purposeCounts[key]
                 }));
 
+                // Count processing statuses
+                const statusCounts = visitors.reduce<Record<string, number>>((acc, visitor) => {
+                    acc[visitor.processingStatus] = (acc[visitor.processingStatus] || 0) + 1;
+                    return acc;
+                }, {});
+
+                // Format data for the progress bar chart
+                const progressData = Object.keys(statusCounts).map(key => ({
+                    status: key,
+                    count: statusCounts[key]
+                }));
+
                 setData({
                     area: areaData,
-                    purposePie
+                    purposePie,
+                    progress: progressData // 添加处理进度数据
                 });
             } catch (error) {
+                setError('Error loading data');
                 console.error("Error loading data:", error);
+            } finally {
+                setLoading(false);
             }
         }
 
         loadData();
     }, []);
 
-    if (!data) return <p>Loading...</p>;
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <div className="p-4">
@@ -115,7 +139,7 @@ const ChartPage = () => {
                     <Line type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" />
                 </LineChart>
             </div>
-            <div className="bg-white shadow-md rounded-md p-4">
+            <div className="bg-white shadow-md rounded-md p-4 mb-6">
                 <h2 className="text-2xl font-bold mb-4">访问目的饼图</h2>
                 <PieChart width={800} height={400}>
                     <Pie
@@ -132,6 +156,17 @@ const ChartPage = () => {
                     <Tooltip />
                     <Legend />
                 </PieChart>
+            </div>
+            <div className="bg-white shadow-md rounded-md p-4">
+                <h2 className="text-2xl font-bold mb-4">处理进度条</h2>
+                <BarChart width={800} height={400} data={data.progress} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis type="number" />
+                    <YAxis type="category" dataKey="status" />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="count" fill="#82ca9d" />
+                </BarChart>
             </div>
         </div>
     );

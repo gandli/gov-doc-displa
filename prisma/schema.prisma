@@ -4,9 +4,13 @@ generator client {
 }
 
 // 数据源配置
+// datasource db {
+//   provider = "postgresql" // 数据库类型：可以是 postgresql, mysql, sqlite, sqlserver
+//   url      = env("DATABASE_URL") // 数据库连接字符串
+// }
 datasource db {
-  provider = "postgresql" // 数据库类型：可以是 postgresql, mysql, sqlite, sqlserver
-  url      = env("DATABASE_URL") // 数据库连接字符串
+  provider = "sqlite"
+  url      = "file:./dev.db" // SQLite 数据库文件路径
 }
 
 // 数据模型
@@ -29,3 +33,6 @@ model Visitor {
   processingStatus String?
   processingTime   DateTime?
 }
+
+// bunx prisma migrate dev --name init
+// bunx prisma studio 
