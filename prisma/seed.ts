@@ -7,12 +7,26 @@ async function main() {
     // 插入测试数据到 `article` 表
     await prisma.article.createMany({
         data: [
-            { title: '第一篇文章', content: '这是第一篇文章的内容。' },
-            { title: '第二篇文章', content: '这是第二篇文章的内容。' },
-            { title: '第三篇文章', content: '这是第三篇文章的内容。' },
+            {
+                title: '第一篇文章',
+                content: '这是第一篇文章的内容。',
+                category: '技术',  // 添加分类字段
+                updatedAt: new Date()  // 添加更新时间字段
+            },
+            {
+                title: '第二篇文章',
+                content: '这是第二篇文章的内容。',
+                category: '新闻',  // 添加分类字段
+                updatedAt: new Date()  // 添加更新时间字段
+            },
+            {
+                title: '第三篇文章',
+                content: '这是第三篇文章的内容。',
+                category: '生活',  // 添加分类字段
+                updatedAt: new Date()  // 添加更新时间字段
+            },
         ],
     });
-
     // 插入测试数据到 `visitor` 表
     await prisma.visitor.createMany({
         data: [

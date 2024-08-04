@@ -15,9 +15,12 @@ datasource db {
 
 // 数据模型
 model Article {
-  id      Int    @id @default(autoincrement())
-  title   String
-  content String
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  category  String // 添加分类字段
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Visitor {
