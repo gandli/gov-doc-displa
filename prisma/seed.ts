@@ -8,8 +8,8 @@ async function main() {
     await prisma.article.createMany({
         data: [
             {
-                title: '第一篇文章',
-                content: '这是第一篇文章的内容。',
+                title: 'The People of the Kingdom',
+                content: 'The king, seeing how much happier his subjects were, realized the error of his ways and repealed the joke tax.',
                 category: '技术',  // 添加分类字段
                 updatedAt: new Date()  // 添加更新时间字段
             },
@@ -77,3 +77,4 @@ main()
     .finally(async () => {
         await prisma.$disconnect();
     });
+// bunx prisma db seed 
