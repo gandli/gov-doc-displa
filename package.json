@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev-win": "cross-env NODE_OPTIONS='--inspect' next dev"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
+    "cross-env": "^7.0.3",
     "next": "14.2.5",
     "prisma": "^5.17.0",
     "react": "^18",
