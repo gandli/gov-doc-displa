@@ -23,7 +23,9 @@ async function main() {
                 phone: '13800000001',
                 visitTime: new Date('2024-08-05T10:00:00Z'),
                 purpose: '办理证件',
-                documentNumber: 'A123456789'
+                documentNumber: 'A123456789',
+                processingStatus: '未处理', // 添加此字段
+                processingTime: null,        // 添加此字段
             },
             {
                 name: '李四',
@@ -32,7 +34,9 @@ async function main() {
                 phone: '13800000002',
                 visitTime: new Date('2024-08-05T11:00:00Z'),
                 purpose: '处理案件',
-                caseNumber: 'C987654321'
+                caseNumber: 'C987654321',
+                processingStatus: '处理中', // 添加此字段
+                processingTime: new Date('2024-08-05T11:30:00Z'), // 添加此字段
             },
             {
                 name: '王五',
@@ -41,7 +45,9 @@ async function main() {
                 phone: '13800000003',
                 visitTime: new Date('2024-08-05T12:00:00Z'),
                 purpose: '办理证件',
-                documentNumber: 'B987654321'
+                documentNumber: 'B987654321',
+                processingStatus: '已处理', // 添加此字段
+                processingTime: new Date('2024-08-05T12:30:00Z'), // 添加此字段
             },
         ],
     });

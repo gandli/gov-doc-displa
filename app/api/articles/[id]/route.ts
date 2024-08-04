@@ -3,6 +3,26 @@
 import { prisma } from '@/app/lib/prisma'
 import { NextResponse } from 'next/server'
 
+export async function GET(
+    request: Request,
+    { params }: { params: { id: string } }
+) {
+    try {
+        const id = parseInt(params.id)
+        const article = await prisma.article.findUnique({
+            where: { id },
+        })
+        if (article) {
+            return NextResponse.json(article)
+        } else {
+            return NextResponse.json({ error: '文章未找到' }, { status: 404 })
+        }
+    } catch (error) {
+        console.error('获取文章时出错:', error)
+        return NextResponse.json({ error: '获取文章失败' }, { status: 500 })
+    }
+}
+
 export async function PUT(
     request: Request,
     { params }: { params: { id: string } }

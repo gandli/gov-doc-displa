@@ -91,7 +91,6 @@ const ChartPage = () => {
 
     return (
         <div className="p-4">
-            <h1 className="text-3xl font-bold mb-6">访客数据图表</h1>
             <div className="bg-white shadow-md rounded-md p-4 mb-6">
                 <h2 className="text-2xl font-bold mb-4">每日到访人数面积图</h2>
                 <LineChart width={800} height={400} data={data.area}>

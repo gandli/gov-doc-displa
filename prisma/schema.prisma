@@ -17,13 +17,15 @@ model Article {
 }
 
 model Visitor {
-  id             Int      @id @default(autoincrement())
-  name           String
-  gender         String
-  idCard         String
-  phone          String
-  visitTime      DateTime
-  purpose        String
-  documentNumber String?
-  caseNumber     String?
+  id               Int       @id @default(autoincrement())
+  name             String
+  gender           String
+  idCard           String
+  phone            String
+  visitTime        DateTime
+  purpose          String
+  documentNumber   String?
+  caseNumber       String?
+  processingStatus String?
+  processingTime   DateTime?
 }
