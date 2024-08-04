@@ -1,18 +1,27 @@
 // app/api/visitor/list/route.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'GET') {
-        try {
-            const visitors = await prisma.visitor.findMany();
-            res.status(200).json(visitors);
-        } catch (error) {
-            res.status(500).json({ error: 'Failed to fetch visitors' });
-        }
-    } else {
-        res.status(405).json({ error: 'Method not allowed' });
+export async function GET() {
+    try {
+        const visitors = await prisma.visitor.findMany();
+        return NextResponse.json(visitors);
+    } catch (error) {
+        return NextResponse.json({ error: 'Failed to fetch visitors' }, { status: 500 });
+    }
+}
+
+export async function POST(request: Request) {
+    try {
+        const parsedData = await request.json();
+        // Schema validation here if needed
+        const newVisitor = await prisma.visitor.create({
+            data: parsedData,
+        });
+        return NextResponse.json(newVisitor, { status: 201 });
+    } catch (error) {
+        return NextResponse.json({ error: 'Failed to create visitor' }, { status: 400 });
     }
 }

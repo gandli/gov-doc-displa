@@ -15,6 +15,19 @@ import {
     Legend,
 } from "recharts";
 
+
+
+// 定义 PurposePieEntry 类型
+interface PurposePieEntry {
+    name: string;
+    value: number;
+}
+
+// 定义数据类型
+interface Data {
+    purposePie: PurposePieEntry[];
+}
+
 // Fetch visitors data from the API
 const fetchVisitors = async () => {
     const response = await fetch('/api/visitor');
@@ -112,7 +125,7 @@ const ChartPage = () => {
                         outerRadius={150}
                         fill="#82ca9d"
                     >
-                        {data.purposePie.map((entry, index) => (
+                        {data.purposePie.map((entry: PurposePieEntry, index: number) => (
                             <Cell key={`cell-${index}`} fill={['#FF6384', '#36A2EB', '#FFCE56'][index % 3]} />
                         ))}
                     </Pie>

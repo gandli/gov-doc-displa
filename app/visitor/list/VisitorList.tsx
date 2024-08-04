@@ -34,7 +34,13 @@ const VisitorList: React.FC = () => {
                 const data = await response.json();
                 setVisitors(data);
             } catch (error) {
-                setError(error.message);
+                // 使用类型断言将 error 转换为 Error 对象
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    // 处理其他类型的错误
+                    setError('An unknown error occurred');
+                }
             } finally {
                 setLoading(false);
             }
@@ -93,7 +99,12 @@ const VisitorList: React.FC = () => {
             setEditingVisitor(null);
             setFormValues({});
         } catch (error) {
-            setError(error.message);
+            if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                // 处理其他类型的错误
+                setError('An unknown error occurred');
+            }
         }
     };
 

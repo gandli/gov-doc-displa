@@ -1,5 +1,4 @@
 // app\api\visitor\route.ts
-// app/api/visitor/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
@@ -25,7 +24,16 @@ export async function POST(request: Request) {
         });
         return NextResponse.json(newVisitor, { status: 201 });
     } catch (error) {
-        return NextResponse.json({ error: error.errors }, { status: 400 });
+        if (error instanceof z.ZodError) {
+            // Zod validation error
+            return NextResponse.json({ error: error.errors }, { status: 400 });
+        } else if (error instanceof Error) {
+            // Other errors
+            return NextResponse.json({ error: error.message }, { status: 500 });
+        } else {
+            // Unknown error
+            return NextResponse.json({ error: 'Unknown error occurred' }, { status: 500 });
+        }
     }
 }
 
@@ -34,6 +42,10 @@ export async function GET() {
         const visitors = await prisma.visitor.findMany();
         return NextResponse.json(visitors);
     } catch (error) {
-        return NextResponse.json({ error: 'Failed to fetch visitors' }, { status: 500 });
+        if (error instanceof Error) {
+            return NextResponse.json({ error: error.message }, { status: 500 });
+        } else {
+            return NextResponse.json({ error: 'Unknown error occurred' }, { status: 500 });
+        }
     }
 }
