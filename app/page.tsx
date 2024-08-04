@@ -19,7 +19,7 @@ const HomePage = async () => {
   // 渲染页面
   return (
     <div>
-      <h1>文章列表</h1>
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">文章列表</h1>
       <ul>
         {articles.map((article) => (
           <li key={article.id}>
