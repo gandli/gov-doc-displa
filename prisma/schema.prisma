@@ -1,0 +1,17 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 数据源配置
+datasource db {
+  provider = "postgresql"  // 数据库类型：可以是 postgresql, mysql, sqlite, sqlserver
+  url      = env("DATABASE_URL")  // 数据库连接字符串
+}
+
+// 数据模型
+model Article {
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
+}
