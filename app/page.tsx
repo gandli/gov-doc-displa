@@ -24,7 +24,7 @@ const HomePage = async () => {
         {articles.map((article) => (
           <li className='mb-24' key={article.id}>
             <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{article.title}</h2>
-            <p className="leading-7 [&:not(:first-child)]:mt-6">{article.content}</p>
+            <p className="leading-7 [&:not(:first-child)]:mt-6 text-muted-foreground">{article.content}</p>
           </li>
         ))}
       </ul>
