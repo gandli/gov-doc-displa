@@ -17,6 +17,12 @@ import {
     Bar,
 } from "recharts";
 
+interface Visitor {
+    visitTime: string | number | Date;
+    purpose: string;
+    processingStatus: string;
+}
+
 // 定义 PurposePieEntry 类型
 interface PurposePieEntry {
     name: string;
@@ -37,7 +43,7 @@ interface Data {
 }
 
 // Fetch visitors data from the API
-const fetchVisitors = async () => {
+const fetchVisitors = async (): Promise<Visitor[]> => {
     const response = await fetch('/api/visitor');
     if (!response.ok) {
         throw new Error('Failed to fetch visitors');
@@ -130,7 +136,7 @@ const ChartPage = () => {
         <div className="p-4">
             <div className="bg-white shadow-md rounded-md p-4 mb-6">
                 <h2 className="text-2xl font-bold mb-4">每日到访人数面积图</h2>
-                <LineChart width={800} height={400} data={data.area}>
+                <LineChart width={800} height={400} data={data?.area}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
                     <YAxis />
@@ -143,13 +149,13 @@ const ChartPage = () => {
                 <h2 className="text-2xl font-bold mb-4">访问目的饼图</h2>
                 <PieChart width={800} height={400}>
                     <Pie
-                        data={data.purposePie}
+                        data={data?.purposePie}
                         dataKey="value"
                         nameKey="name"
                         outerRadius={150}
                         fill="#82ca9d"
                     >
-                        {data.purposePie.map((entry: PurposePieEntry, index: number) => (
+                        {data?.purposePie.map((entry: PurposePieEntry, index: number) => (
                             <Cell key={`cell-${index}`} fill={['#FF6384', '#36A2EB', '#FFCE56'][index % 3]} />
                         ))}
                     </Pie>
@@ -159,7 +165,7 @@ const ChartPage = () => {
             </div>
             <div className="bg-white shadow-md rounded-md p-4">
                 <h2 className="text-2xl font-bold mb-4">处理进度条</h2>
-                <BarChart width={800} height={400} data={data.progress} layout="vertical">
+                <BarChart width={800} height={400} data={data?.progress} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis type="number" />
                     <YAxis type="category" dataKey="status" />
