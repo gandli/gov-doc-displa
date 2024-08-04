@@ -20,7 +20,7 @@ const HomePage = async () => {
   return (
     <div>
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">文章列表</h1>
-      <ul>
+      <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
         {articles.map((article) => (
           <li key={article.id}>
             <h2>{article.title}</h2>
