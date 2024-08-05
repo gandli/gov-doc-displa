@@ -1,6 +1,6 @@
 // app\api\visitor\[id]\route.ts
 
-import { prisma } from '@/app/lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
 // 获取指定 ID 的访客信息

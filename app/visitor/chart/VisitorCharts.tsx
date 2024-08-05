@@ -134,7 +134,7 @@ const ChartPage = () => {
 
     return (
         <div className="p-4">
-            <div className="bg-white shadow-md rounded-md p-4 mb-6">
+            <div className="bg-white p-4 mb-6">
                 <h2 className="text-2xl font-bold mb-4">每日到访人数面积图</h2>
                 <LineChart width={800} height={400} data={data?.area}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -145,7 +145,7 @@ const ChartPage = () => {
                     <Line type="monotone" dataKey="count" stroke="#8884d8" fill="#8884d8" />
                 </LineChart>
             </div>
-            <div className="bg-white shadow-md rounded-md p-4 mb-6">
+            <div className="bg-white  p-4 mb-6">
                 <h2 className="text-2xl font-bold mb-4">访问目的饼图</h2>
                 <PieChart width={800} height={400}>
                     <Pie
@@ -163,7 +163,7 @@ const ChartPage = () => {
                     <Legend />
                 </PieChart>
             </div>
-            <div className="bg-white shadow-md rounded-md p-4">
+            <div className="bg-white  p-4">
                 <h2 className="text-2xl font-bold mb-4">处理进度条</h2>
                 <BarChart width={800} height={400} data={data?.progress} layout="vertical">
                     <CartesianGrid strokeDasharray="3 3" />
