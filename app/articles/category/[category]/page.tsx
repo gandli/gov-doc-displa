@@ -1,20 +1,19 @@
 // app/articles/category/[category]/page.tsx
 import { notFound } from 'next/navigation';
 import { getArticlesByCategory } from '../../GetArticles';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
 
 const CategoryPage = async ({ params }: { params: { category: string } }) => {
+    const decodedCategory = decodeURIComponent(params.category);
+
     try {
-        const articles = await getArticlesByCategory(params.category);
+        const articles = await getArticlesByCategory(decodedCategory);
         if (articles.length === 0) {
             notFound();
         }
 
         return (
             <div>
-                <h1>Articles in Category: {params.category}</h1>
+                <h1>Articles in Category: {decodedCategory}</h1>
                 {articles.map(article => (
                     <div key={article.id}>
                         <h2>{article.title}</h2>

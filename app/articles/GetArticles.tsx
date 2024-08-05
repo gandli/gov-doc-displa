@@ -1,8 +1,5 @@
 // app\articles\[id]\GetArticles.tsx
-
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 export async function getArticle(id: string) {
     try {
@@ -16,29 +13,37 @@ export async function getArticle(id: string) {
 
         return article;
     } catch (error) {
+        console.error('Failed to fetch article:', error);
         throw new Error('Failed to fetch article');
     }
 }
 
 export async function getArticlesByCategory(category: string) {
     try {
-        // Use a local variable to decode the category parameter
-        const decodedCategory = decodeURIComponent(category);
-
-        // Fetch articles by the decoded category
         const articles = await prisma.article.findMany({
-            where: { category: decodedCategory },
+            where: { category },
         });
 
-        // Check if no articles are found
         if (articles.length === 0) {
             throw new Error('No articles found for this category');
         }
 
         return articles;
     } catch (error) {
-        // Log the error and throw a more generic message
         console.error('Failed to fetch articles by category:', error);
         throw new Error('Failed to fetch articles');
+    }
+}
+
+export async function getAllCategories() {
+    try {
+        const categories = await prisma.article.findMany({
+            select: { category: true },
+            distinct: ['category'],
+        });
+        return categories.map(c => c.category);
+    } catch (error) {
+        console.error('Failed to fetch categories:', error);
+        throw new Error('Failed to fetch categories');
     }
 }
