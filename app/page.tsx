@@ -63,7 +63,7 @@ const HomePage = () => {
             <div className="space-y-4">
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-blue-900">透明政务，服务民众</h1>
               <p className="text-blue-700 text-lg md:text-xl">
-                我们致力于提供全面、及时、准确的政务信息，促进政民互动，提升政府工作效能。
+                我们致力于提供全面、及时、准确的政务信息，促进政民互动，提升工作效能。
               </p>
               <div className="flex gap-4">
                 <Button className={`${theme.primary} hover:bg-blue-700`}>立即查询</Button>
@@ -74,7 +74,7 @@ const HomePage = () => {
               <IconLink href="#" icon={LayoutGrid} text="信息公开" />
               <IconLink href="#" icon={Briefcase} text="在线服务" />
               <IconLink href="#" icon={Calendar} text="政务动态" />
-              <IconLink href="#" icon={Users} text="公众参与" />
+              <IconLink href="#" icon={Users} text="来访登记" />
             </div>
           </div>
         </section>
@@ -82,11 +82,11 @@ const HomePage = () => {
         <section className="py-12 md:py-24 lg:py-32">
           <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: FileText, title: "政策法规", description: "查阅最新的政策法规文件，了解政府工作动向。", link: "查看政策法规" },
+              { icon: FileText, title: "政策法规", description: "查阅最新的政策法规文件，了解工作动向。", link: "查看政策法规" },
               { icon: Briefcase, title: "办事指南", description: "获取各类政务服务的办理流程和所需材料。", link: "查看办事指南" },
-              { icon: Users, title: "公众参与", description: "参与政府决策讨论，提出您的宝贵意见。", link: "参与讨论" },
-              { icon: LayoutGrid, title: "政府公报", description: "浏览政府工作报告和重要公告信息。", link: "查看公报" },
-              { icon: Settings, title: "数据开放", description: "获取政府公开数据，助力创新发展。", link: "浏览数据" },
+              { icon: Users, title: "公众参与", description: "参与决策讨论，提出您的宝贵意见。", link: "参与讨论" },
+              { icon: LayoutGrid, title: "工作动态", description: "浏览工作报告和重要公告信息。", link: "查看动态" },
+              { icon: Settings, title: "数据开放", description: "获取公开数据，助力创新发展。", link: "浏览数据" },
               { icon: CircleHelp, title: "咨询投诉", description: "提出您的问题或建议，我们将及时处理和回复。", link: "联系我们" }
             ].map((item, index) => (
               <Card key={index} className="border-blue-200 hover:border-blue-400 transition-colors">
