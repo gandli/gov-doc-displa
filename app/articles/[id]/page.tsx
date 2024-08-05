@@ -1,7 +1,7 @@
 // app\articles\[id]\page.tsx
 import { PrismaClient } from '@prisma/client';
 import { notFound } from 'next/navigation';
-import {getArticle} from './ArticleDetails';
+import { getArticle } from '../GetArticles';
 
 const prisma = new PrismaClient();
 

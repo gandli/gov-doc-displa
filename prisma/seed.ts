@@ -10,13 +10,13 @@ async function main() {
             {
                 title: 'The People of the Kingdom',
                 content: 'The king, seeing how much happier his subjects were, realized the error of his ways and repealed the joke tax.',
-                category: '技术',  // 添加分类字段
+                category: 'dev',  // 添加分类字段
                 updatedAt: new Date()  // 添加更新时间字段
             },
             {
                 title: '第二篇文章',
                 content: '这是第二篇文章的内容。',
-                category: '新闻',  // 添加分类字段
+                category: 'new',  // 添加分类字段
                 updatedAt: new Date()  // 添加更新时间字段
             },
             {
