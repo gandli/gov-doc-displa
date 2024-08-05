@@ -1,223 +1,165 @@
-import Link from "next/link"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Mountain, Search, FileText, Users, Calendar, Briefcase, Twitter, Facebook } from 'lucide-react'
-
-const NavLink = ({ href, children }) => (
-  <Link href={href} className="hover:text-blue-200 transition-colors" prefetch={false}>
-    {children}
-  </Link>
-)
-
-const InfoCard = ({ title, content, linkText = "查看详情" }) => (
-  <div className="bg-white rounded-md p-4 shadow-sm hover:shadow-md transition-shadow border border-blue-100">
-    <h3 className="text-lg font-bold mb-2 text-blue-800">{title}</h3>
-    <p className="text-gray-600 mb-4">{content}</p>
-    <Link href="#" className="text-blue-600 hover:text-blue-800 hover:underline" prefetch={false}>
-      {linkText}
-    </Link>
-  </div>
-)
+import React from 'react';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { FileText, Users, Calendar, Briefcase, LayoutGrid, Settings, CircleHelp, Search } from 'lucide-react';
 
 const IconLink = ({ href, icon: Icon, text }) => (
   <Link
     href={href}
-    className="bg-white rounded-md p-4 flex flex-col items-center justify-center hover:bg-blue-50 transition-colors shadow-sm hover:shadow-md border border-blue-100"
-    prefetch={false}
+    className="bg-background rounded-lg shadow-lg p-6 flex flex-col items-center justify-center gap-4 hover:bg-accent hover:text-accent-foreground transition-colors"
   >
-    <Icon className="w-8 h-8 mb-2 text-blue-600" />
-    <span className="text-blue-800">{text}</span>
+    <Icon className="w-12 h-12" />
+    <span className="text-lg font-medium">{text}</span>
   </Link>
-)
+);
+
+const SearchBar = () => (
+  <div className="relative">
+    <Input
+      type="text"
+      placeholder="搜索政务信息..."
+      className="pl-10 pr-4 py-2 w-64 bg-background"
+    />
+    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+  </div>
+);
 
 const HomePage = () => {
-  const navItems = ['首页', '信息公开', '在线服务', '政策解读', '来访登记', '内容管理', '联系我们']
-  const infoLinks = [
-    { icon: FileText, text: '政策法规' },
-    { icon: Users, text: '机构职能' },
-    { icon: Calendar, text: '政务动态' },
-    { icon: Briefcase, text: '政务服务' }
-  ]
-
   return (
-    <div className='flex flex-col min-h-screen bg-blue-50'>
-      <header className="bg-blue-700 text-white py-4 px-6 flex items-center justify-between sticky top-0 z-10 shadow-md">
-        <Link href="#" className="flex items-center gap-2" prefetch={false}>
-          <Mountain className="w-6 h-6" />
-          <span className="text-lg font-bold">政务公开</span>
-        </Link>
-        <div className="flex items-center gap-4">
-          <nav className="hidden lg:flex items-center gap-4">
-            {navItems.map(item => (
-              <NavLink key={item} href="#">{item}</NavLink>
-            ))}
+    <div className="flex flex-col w-full min-h-screen bg-background">
+      <header className="px-6 py-4 border-b">
+        <div className="container mx-auto flex items-center justify-between">
+          <Link href="#" className="flex items-center gap-2">
+            <FileText className="w-8 h-8" />
+            <span className="text-xl font-bold">政务公开平台</span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-6">
+            <Link href="#" className="text-muted-foreground hover:text-foreground">首页</Link>
+            <Link href="#" className="text-muted-foreground hover:text-foreground">信息公开</Link>
+            <Link href="#" className="text-muted-foreground hover:text-foreground">在线服务</Link>
+            <Link href="#" className="text-muted-foreground hover:text-foreground">政策解读</Link>
           </nav>
-          <div className="relative">
-            <Input
-              type="text"
-              placeholder="搜索..."
-              className="border-none focus:ring-0 focus:border-none bg-blue-600 text-white placeholder-blue-200"
-            />
-            <Button variant="ghost" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 text-white">
-              <Search className="w-5 h-5" />
-            </Button>
+          <div className="flex items-center gap-4">
+            <SearchBar />
+            <Button variant="outline">登录</Button>
           </div>
         </div>
       </header>
 
-      <section className="bg-[url('/hero-bg.jpg')] bg-cover bg-center py-24 px-6 flex flex-col items-center justify-center text-center text-white">
-        <h1 className="text-4xl font-bold mb-4">欢迎访问政务公开平台</h1>
-        <p className="text-lg mb-8">在这里，您可以查找和获取政府信息，了解最新政策动态。</p>
-        <Link
-          href="#"
-          className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          prefetch={false}
-        >
-          了解更多
-        </Link>
-      </section>
-
-      <main className="flex-1 py-12 px-6 max-w-7xl mx-auto w-full">
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4 text-blue-800">最新公告</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <InfoCard
-              title="关于2023年政务公开工作的通知"
-              content="为进一步推进政务公开工作，现就2023年相关工作安排通知如下..."
-            />
-            <InfoCard
-              title="关于开展政务服务事项清单公开的通知"
-              content="为进一步提升政务服务透明度，现就开展政务服务事项清单公开工作通知如下..."
-            />
-            <InfoCard
-              title="关于2022年政务公开工作总结的通报"
-              content="2022年，我们在政务公开工作中取得了一定成绩，现就相关情况通报如下..."
-            />
+      <main className="flex-1">
+        <section className="bg-muted py-12 md:py-24 lg:py-32">
+          <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-4">
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">透明政务，服务民众</h1>
+              <p className="text-muted-foreground text-lg md:text-xl">
+                我们致力于提供全面、及时、准确的政务信息，促进政民互动，提升政府工作效能。
+              </p>
+              <div className="flex gap-4">
+                <Button>立即查询</Button>
+                <Button variant="outline">了解更多</Button>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <IconLink href="#" icon={LayoutGrid} text="信息公开" />
+              <IconLink href="#" icon={Briefcase} text="在线服务" />
+              <IconLink href="#" icon={Calendar} text="政务动态" />
+              <IconLink href="#" icon={Users} text="公众参与" />
+            </div>
           </div>
         </section>
 
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4 text-blue-800">信息公开入口</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {infoLinks.map(({ icon, text }) => (
-              <IconLink key={text} href="#" icon={icon} text={text} />
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4 text-blue-800">政策解读</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <InfoCard
-              title="《关于进一步推进政务公开工作的意见》解读"
-              content="近日，政府发布了《关于进一步推进政务公开工作的意见》，主要内容包括..."
-            />
-            <InfoCard
-              title="《政务服务事项清单》解读"
-              content="为进一步提升政务服务透明度，政府发布了《政务服务事项清单》，主要包括..."
-            />
-            <InfoCard
-              title="《信息公开条例》解读"
-              content="为规范政务信息公开工作，政府制定了《信息公开条例》，主要内容包括..."
-            />
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-4 text-blue-800">舆情回应</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <InfoCard
-              title='关于"XX事件"的舆情回应'
-              content='近期，社会上出现了关于" XX事件"的舆论，现就相关情况回应如下...'
-            />
-            <InfoCard
-              title='关于"YY事件"的舆情回应'
-              content='近期，社会上出现了关于" YY事件"的舆论，现就相关情况回应如下...'
-            />
-            <InfoCard
-              title='关于"ZZ事件"的舆情回应'
-              content='近期，社会上出现了关于" ZZ事件"的舆论，现就相关情况回应如下...'
-            />
+        <section className="py-12 md:py-24 lg:py-32">
+          <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card>
+              <CardHeader>
+                <FileText className="w-8 h-8" />
+                <CardTitle>政策法规</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">查阅最新的政策法规文件，了解政府工作动向。</p>
+              </CardContent>
+              <CardFooter>
+                <Link href="#" className="text-primary hover:underline">查看政策法规</Link>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <Briefcase className="w-8 h-8" />
+                <CardTitle>办事指南</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">获取各类政务服务的办理流程和所需材料。</p>
+              </CardContent>
+              <CardFooter>
+                <Link href="#" className="text-primary hover:underline">查看办事指南</Link>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <Users className="w-8 h-8" />
+                <CardTitle>公众参与</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">参与政府决策讨论，提出您的宝贵意见。</p>
+              </CardContent>
+              <CardFooter>
+                <Link href="#" className="text-primary hover:underline">参与讨论</Link>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <LayoutGrid className="w-8 h-8" />
+                <CardTitle>政府公报</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">浏览政府工作报告和重要公告信息。</p>
+              </CardContent>
+              <CardFooter>
+                <Link href="#" className="text-primary hover:underline">查看公报</Link>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <Settings className="w-8 h-8" />
+                <CardTitle>数据开放</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">获取政府公开数据，助力创新发展。</p>
+              </CardContent>
+              <CardFooter>
+                <Link href="#" className="text-primary hover:underline">浏览数据</Link>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CircleHelp className="w-8 h-8" />
+                <CardTitle>咨询投诉</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">提出您的问题或建议，我们将及时处理和回复。</p>
+              </CardContent>
+              <CardFooter>
+                <Link href="#" className="text-primary hover:underline">联系我们</Link>
+              </CardFooter>
+            </Card>
           </div>
         </section>
       </main>
 
-      <section className="bg-blue-100 py-12 px-6">
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h2 className="text-2xl font-bold mb-4 text-blue-800">在线服务</h2>
-            <p className="text-gray-600 mb-4">您可以通过我们的在线服务平台，快速办理各类政务事项。</p>
-            <Link
-              href="#"
-              className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              prefetch={false}
-            >
-              进入在线服务
-            </Link>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold mb-4 text-blue-800">实体大厅</h2>
-            <p className="text-gray-600 mb-4">您也可以前往我们的实体政务大厅，获取现场服务。</p>
-            <div className="space-y-2">
-              {[
-                { name: 'XX区政务大厅', address: 'XX市XX区XX路XX号', phone: '0XX-XXXXXXXX' },
-                { name: 'YY区政务大厅', address: 'YY市YY区YY路YY号', phone: '0YY-YYYYYYY' }
-              ].map(hall => (
-                <div key={hall.name}>
-                  <h3 className="text-lg font-bold text-blue-700">{hall.name}</h3>
-                  <p className="text-gray-600">
-                    地址: {hall.address}<br />
-                    电话: {hall.phone}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <Link
-              href="#"
-              className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mt-4"
-              prefetch={false}
-            >
-              来访登记
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-blue-700 text-white py-12 px-6">
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h2 className="text-2xl font-bold mb-4">平台建设</h2>
-            <p className="text-blue-100 mb-4">我们正在不断完善政务公开平台，提升服务质量和效率。</p>
-            <Link href="#" className="text-white hover:text-blue-200 hover:underline" prefetch={false}>
-              了解更多
-            </Link>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold mb-4">信息公开条例</h2>
-            <p className="text-blue-100 mb-4">我们制定了《信息公开条例》，规范政务信息公开工作。</p>
-            <Link href="#" className="text-white hover:text-blue-200 hover:underline" prefetch={false}>
-              查看条例
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <footer className="bg-blue-700 text-white py-6 px-6">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
-          <p className="text-sm">&copy; 2023 政务公开平台. All rights reserved.</p>
-          <div className="flex items-center gap-4 flex-wrap justify-center">
-            {['来访登记', '内容管理', '联系我们', '隐私政策', '使用条款'].map(item => (
-              <NavLink key={item} href="#">{item}</NavLink>
-            ))}
-            <div className="flex items-center gap-2">
-              <Twitter className="w-5 h-5" />
-              <Facebook className="w-5 h-5" />
-            </div>
-          </div>
+      <footer className="bg-muted py-6 border-t">
+        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+          <p className="text-muted-foreground text-sm">&copy; 2024 政务公开平台. 版权所有.</p>
+          <nav className="flex items-center gap-4 mt-4 md:mt-0">
+            <Link href="#" className="text-muted-foreground hover:text-foreground text-sm">隐私政策</Link>
+            <Link href="#" className="text-muted-foreground hover:text-foreground text-sm">使用条款</Link>
+            <Link href="#" className="text-muted-foreground hover:text-foreground text-sm">联系我们</Link>
+          </nav>
         </div>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
