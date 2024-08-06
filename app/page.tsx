@@ -1,9 +1,11 @@
-import React from 'react';
+"use client"
+
+import React, { useState } from 'react';
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { Users, Calendar, Briefcase, LayoutGrid, Settings, CircleHelp, Search, FileText } from 'lucide-react';
+import { Users, Calendar, Briefcase, LayoutGrid, Settings, CircleHelp, Search, FileText, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 
 // 定义通用的链接类型
@@ -65,20 +67,21 @@ const footerNavLinks = [
 
 // SearchBar 组件
 const SearchBar: React.FC = () => (
-  <div className="relative">
+  <div className="relative w-full md:w-64">
     <Input
       type="text"
       placeholder="搜索政务信息..."
-      className="pl-10 pr-4 py-2 w-64 bg-white border-blue-300 focus:border-blue-500 focus:ring-blue-500"
+      className="pl-10 pr-4 py-2 w-full bg-white border-blue-300 focus:border-blue-500 focus:ring-blue-500"
     />
     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-400 w-4 h-4" />
   </div>
 );
 
-// HomePage 组件
-const HomePage: React.FC = () => (
-  <div className="flex flex-col w-full min-h-screen bg-white">
-    <header className="px-6 py-4 bg-blue-600 text-white">
+// Header 组件
+const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  return (
+    <header className="px-4 md:px-6 py-4 bg-blue-600 text-white">
       <div className="container mx-auto flex items-center justify-between">
         <Link href="#" className="flex items-center gap-2">
           <Image
@@ -90,6 +93,20 @@ const HomePage: React.FC = () => (
           />
           <span className="text-xl font-bold">政务公开平台</span>
         </Link>
+
+        {/* 移动端菜单按钮 */}
+        <button
+          className="md:hidden"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
+
+        {/* 桌面端导航 */}
         <nav className="hidden md:flex items-center gap-6">
           {headerNavLinks.map((item, index) => (
             <Link key={index} href={item.href} className="text-blue-100 hover:text-white">
@@ -97,24 +114,58 @@ const HomePage: React.FC = () => (
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-4">
+
+        {/* 桌面端搜索栏和登录按钮 */}
+        <div className="hidden md:flex items-center gap-4">
           <SearchBar />
-          <Button variant="outline" className="text-white border-white hover:bg-blue-700">登录</Button>
+          <Button variant="outline" className="text-white border-white hover:bg-blue-700">
+            登录
+          </Button>
         </div>
       </div>
-    </header>
 
+      {/* 移动端菜单 */}
+      {isMenuOpen && (
+        <div className="md:hidden mt-4">
+          <nav className="flex flex-col gap-4">
+            {headerNavLinks.map((item, index) => (
+              <Link
+                key={index}
+                href={item.href}
+                className="text-blue-100 hover:text-white"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.text}
+              </Link>
+            ))}
+          </nav>
+          <div className="mt-4 flex flex-col gap-4">
+            <SearchBar />
+            <Button variant="outline" className="text-white border-white hover:bg-blue-700 w-full">
+              登录
+            </Button>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
+
+// HomePage 组件
+const HomePage: React.FC = () => (
+  <div className="flex flex-col w-full min-h-screen bg-white">
+    <Header />
     <main className="flex-1">
       <section className="bg-blue-100 text-blue-800 py-12 md:py-24 lg:py-32">
-        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-blue-900">透明政务，服务民众</h1>
-            <p className="text-blue-700 text-lg md:text-xl">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-blue-900">透明政务，服务民众</h1>
+            <p className="text-blue-700 text-base md:text-lg lg:text-xl">
               我们致力于提供全面、及时、准确的政务信息，促进政民互动，提升工作效能。
             </p>
-            <div className="flex gap-4">
-              <Button className="bg-blue-600 text-white hover:bg-blue-700">立即查询</Button>
-              <Button variant="outline" className="text-blue-600 border-blue-600 hover:bg-blue-50">了解更多</Button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button className="bg-blue-600 text-white hover:bg-blue-700 w-full sm:w-auto">立即查询</Button>
+              <Button variant="outline" className="text-blue-600 border-blue-600 hover:bg-blue-50 w-full sm:w-auto">了解更多</Button>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -126,7 +177,7 @@ const HomePage: React.FC = () => (
       </section>
 
       <section className="py-12 md:py-24 lg:py-32">
-        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {serviceCards.map(({ icon: Icon, title, description, text, href }, index) => (
             <Card key={index} className="border-blue-200 hover:border-blue-400 transition-colors">
               <CardHeader>
@@ -148,7 +199,7 @@ const HomePage: React.FC = () => (
     </main>
 
     <footer className="bg-slate-100 py-6 border-t border-blue-200">
-      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+      <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between">
         <p className="text-slate-600 text-sm">&copy; 2024 政务公开平台. 版权所有.</p>
         <nav className="flex items-center gap-4 mt-4 md:mt-0">
           {footerNavLinks.map((link, index) => (
