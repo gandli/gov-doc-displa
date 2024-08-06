@@ -141,7 +141,7 @@ const Header: React.FC = () => {
           </nav>
           <div className="mt-4 flex flex-col gap-4">
             <SearchBar />
-            <Button variant="outline" className="text-white border-white hover:bg-blue-700 w-full">
+            <Button variant="outline" className="text-black border-white hover:bg-blue-700 w-full">
               登录
             </Button>
           </div>
