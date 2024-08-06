@@ -1,7 +1,7 @@
 import PDFDocumentViewer from '@/components/PDFViewer';
 
 export default function Sample() {
-    const file = './fwzn.pdf'; 
+    const file = './bllc.pdf'; 
 
     return (
         <PDFDocumentViewer file={file} />

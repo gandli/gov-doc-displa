@@ -118,7 +118,7 @@ const Header: React.FC = () => {
         {/* 桌面端搜索栏和登录按钮 */}
         <div className="hidden md:flex items-center gap-4">
           <SearchBar />
-          <Button variant="outline" className="text-white border-white hover:bg-blue-700">
+          <Button variant="outline" className="text-black border-white hover:bg-blue-700">
             登录
           </Button>
         </div>
