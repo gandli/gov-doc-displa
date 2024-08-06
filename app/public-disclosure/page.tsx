@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
-
 import type { PDFDocumentProxy } from 'pdfjs-dist';
+
 type PDFFile = string | File | null;
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
